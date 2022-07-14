@@ -39,12 +39,12 @@
 ## Bonus
 - Some nice to haves, when there is time to spare.
 
-- [x] A quizz can have a dificulty level
+- [ ] A quizz can have a dificulty level
 
 - [X] Add admin role
 
 - [X] A user with admin role can create and edit quizzes
 
-- [ ] A user can come back to a started quizz at the question he stopped
+- [x] A user can come back to a started quizz at the question he stopped
 
-- [ ] Add or improve a feature of your own choice
+- [X] Add or improve a feature of your own choice
