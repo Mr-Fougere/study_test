@@ -41,9 +41,9 @@
 
 - [x] A quizz can have a dificulty level
 
-- [ ] Add admin role
+- [X] Add admin role
 
-- [ ] A user with admin role can create and edit quizzes
+- [X] A user with admin role can create and edit quizzes
 
 - [ ] A user can come back to a started quizz at the question he stopped
 
