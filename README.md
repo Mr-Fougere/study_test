@@ -12,7 +12,7 @@
   - The quizzes can have any shape as you want or imagine (What is this Pokemon ?, What is the type of this Pokemon ?, etc.)
 
 ### User
-- [x] A user can log in with a valid username and password through a login screen
+- [X] A user can log in with a valid username and password through a login screen
 
 - [x] A user can see a collection of quizzes
 
