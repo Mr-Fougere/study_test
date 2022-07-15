@@ -1,0 +1,12 @@
+<% @quizz.each do |quiz| %>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Quizz n°<%= quiz.id%></h5>
+        <p class="card-text">Difficulté :<%= quiz.difficulty%></p>
+        <a href="<%=edit_quiz_path(quiz.id)%>" class="btn btn-warning">Modifier le quiz</a>
+
+      </div>
+    </div>
+
+<%end%>

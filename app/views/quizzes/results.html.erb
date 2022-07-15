@@ -1,0 +1,24 @@
+<%      good=session[:goodAnswer]
+      session.delete(:goodAnswer)%>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Quizz n°<%= @quiz.id%></h5>
+          <span id="results">
+            <%case good%>
+            <%when 3 %>
+            Bravo vous avez réussi avec <%=good%> bonnes réponses sur 5
+            <%when 4 %>
+            Bravo vous avez réussi avec <%=good%> bonnes réponses sur 5 ! Vous y étiez presque 
+            <%when 5 %>
+            Parfait vous avez répondu bon à toutes les questions !
+            <%else%>
+            Raté vous avez eu seulement <%=good%> bonnes réponses sur 5 ! Reesayer 
+            <%end%>
+          </span> 
+        </div>
+        <a href="<%=start_quiz_path(id:@quiz.id)%>" type="button" class="btn btn-info" id="btnConfirm">Réessayer</a>
+
+        <a href="<%=root_path%>" type="button" class="btn btn-info" id="btnNext">Retourner à l'accueil</a   >
+
+      </div>
+

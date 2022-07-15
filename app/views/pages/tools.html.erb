@@ -1,0 +1,20 @@
+<div class="d-flex">
+<% @quizTools.each do |tool|%>
+
+    <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"><%=tool.capitalize%> a Quiz </h5>
+    <a type="button" class="btn btn-info"  href="<%=case tool when "create" then new_quiz_path  when "modify" then modify_quiz_path when "delete" then delete_quiz_path end%>"> Use this tool</a>
+  </div>
+</div>
+<%end%>
+<% @questionTools.each do |tool|%>
+
+    <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"><%=tool.capitalize%> a Question</h5>
+    <a type="button" class="btn btn-info"  href="<%=case tool when "create" then choice_question_path(start:true)  when "modify" then modify_question_path when "delete" then delete_question_path end%>"> Use this tool</a>
+  </div>
+</div>
+<%end%>
+</div>

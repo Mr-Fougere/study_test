@@ -1,0 +1,62 @@
+page edit
+<% arr_answer=[@quiz.question1_id,@quiz.question2_id,@quiz.question3_id,@quiz.question4_id,@quiz.question5_id]%>
+<%=form_with @quizz do |f| %>
+<div class="form-group row g-0">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+        <div class="nav-link" id="btnQuestion1" >Question 1</div>
+        <div class="nav-link" id="btnQuestion2" >Question 2</div>
+        <div class="nav-link" id="btnQuestion3">Question 3</div>
+        <div class="nav-link" id="btnQuestion4">Question 4</div>
+        <div class="nav-link" id="btnQuestion5">Question 5</div>
+            
+        <button type="submit" class="btn btn-primary">Modify le quiz <%=@quiz.id%></button>
+    </div>
+        </div>
+        </div>
+    </nav>
+<div id="panel_question1" class="row g-0" >
+    <%=f.collection_check_boxes :questions   ,Question.all, :id, :question do |q| %>
+        <%question=q.object%>
+    <div class="card" style="width: 18rem;">
+  <ul class="list-group list-group-flush d-flex flex-row justify-content-center">
+        <%=q.check_box(class: "check_box")%>
+    <%if question.themes !="sprite" %>
+    <div>
+    <li class="list-group-item" style="font-size:12px"><%=question.answer1%></li>
+    <li class="list-group-item" style="font-size:12px"><%=question.answer2%></li>
+   
+    </div>
+    <div>
+     <li class="list-group-item" style="font-size:12px"><%=question.answer3%></li>
+    <li class="list-group-item" style="font-size:12px"><%=question.answer4%></li>
+    </div>
+    <%else%>
+    <li class=" list-group-item p-0"><img style="width:65px" src="<%=question.answer1%>" alt=""/></li>
+    <li class=" list-group-item p-0"><img style="width:65px"src="<%=question.answer2%>" alt=""/></li>
+    <li class="list-group-item p-0"><img style="width:65px" src="<%=question.answer3%>" alt=""/></li>
+    <li class="list-group-item p-0"><img style="width:65px" src="<%=question.answer4%>" alt=""/></li>
+
+    <%end%>
+
+  </ul>
+  <div class="card-footer">
+    <span style="font-size:12px"><%=question.question%></span> 
+  </div>
+  </div>
+  <%end%>
+</div>
+</div>
+
+
+    
+
+<%end%>
+
+<script>
+    
+
+
+</script>

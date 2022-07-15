@@ -1,0 +1,322 @@
+<form action=<%=new_question_path%> method="get">
+                <label  style="display:none" >
+                <input type="text" id="themeInput" name="theme" value="theme">
+                </label>
+
+                <label  style="display:none" >
+                <input type="text" id="typeInput" name="type" value="type">
+                </label>
+
+                <label  style="display:none" >
+                <input type="text" id="subTypeInput" name="subType" value="">
+                </label>
+                <input class="btn btn-success" type="submit" id="btnConfirm"   
+                    value="Confirm selection">
+            </form>
+
+<div class="row flex-row g-0">
+<div class="col-2">
+<div class="card typePanel" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"> Answer Type </h5>
+    <form action=<%=choice_question_path%> method="get">
+        <label  style="display:none" >
+            <input type="text" name="type" value="sprite">
+        </label>
+        <button class="btn btn-outline-primary type" type=submit id="spriteType">
+        <img src="<%=@exPkmn.sprites.front_default%>"/></button>
+    </form>
+
+    <form action=<%=choice_question_path%> method="get">
+        <label  style="display:none" >
+            <input type="text" name="type" value="name">
+        </label>
+        <button class="btn btn-outline-primary type" type=submit id="nameType">
+        <span class="badge bg-secondary">Name </span> : 
+            <%=@exPkmn.name%></button>
+        </button>
+    </form>
+   
+   <form action=<%=choice_question_path%> method="get">
+        <label  style="display:none" >
+            <input type="text" name="type" value="move">
+        </label>
+        <button class="btn btn-outline-primary type" type=submit id="moveType">
+        <span class="badge bg-secondary">Move </span> : 
+            <%=@exPkmn.moves[0].move.name%>
+            </button>
+    </form>
+
+    <form action=<%=choice_question_path%> method="get">
+        <label  style="display:none" >
+            <input type="text" name="type" value="type">
+        </label>
+        <button class="btn btn-outline-primary type" type=submit id="typeType">
+        <span class="badge bg-secondary">Types </span> : 
+            <%=@exPkmn.types[0].type.name%>/<%=@exPkmn.types[1].type.name%>
+            </button>
+    </form>
+
+    <form action=<%=choice_question_path%> method="get">
+        <label  style="display:none" >
+            <input type="text" name="type" value="generation">
+        </label>
+        <button class="btn btn-outline-primary type" type=submit id="generationType">
+        <span class="badge bg-secondary">Generation </span> : 
+            <%=@exPkmn.species.get.generation.name%>
+            </button>
+    </form>
+
+
+    <form action=<%=choice_question_path%> method="get">
+        <label  style="display:none" >
+            <input type="text" name="type" value="pokedex">
+        </label>
+        <button class="btn btn-outline-primary type" type=submit id="pokedexType">
+        <span class="badge bg-secondary">Pokdex </span> : 
+           <%=@exPkmn.species.pokedex_numbers[0].entry_number%>
+            </button>
+    </form>
+    
+
+  </div>
+</div>
+</div>
+
+<div class="col-2">
+
+<div class="card themePanel" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"> Question Theme </h5>
+    <form action=<%=choice_question_path%> method="get">
+        <label  style="display:none" >
+            <input type="text" name="theme" value="sprite">
+        </label>
+        <button class="btn btn-outline-primary theme" type=submit id="spriteTheme">
+        <img src="<%=@exPkmn.sprites.front_default%>"/></button>
+    </form>
+
+    <form action=<%=choice_question_path%> method="get">
+        <label  style="display:none" >
+            <input type="text" name="theme" value="name">
+        </label>
+        <button class="btn btn-outline-primary theme" type=submit id="nameTheme">
+        <span class="badge bg-secondary">Name </span> : 
+            <%=@exPkmn.name%></button>
+        </button>
+    </form>
+   
+   <form action=<%=choice_question_path%> method="get">
+        <label  style="display:none" >
+            <input type="text" name="theme" value="move">
+        </label>
+        <button class="btn btn-outline-primary theme" type=submit id="moveTheme">
+        <span class="badge bg-secondary">Move </span> : 
+            <%=@exPkmn.moves[0].move.name%>
+            </button>
+    </form>
+
+    <form action=<%=choice_question_path%> method="get">
+        <label  style="display:none" >
+            <input type="text" name="theme" value="type">
+        </label>
+        <button class="btn btn-outline-primary theme" type=submit id="typeTheme">
+        <span class="badge bg-secondary">Types </span> : 
+            <%=@exPkmn.types[0].type.name%>/<%=@exPkmn.types[1].type.name%>
+            </button>
+    </form>
+
+    <form action=<%=choice_question_path%> method="get">
+        <label  style="display:none" >
+            <input type="text" name="theme" value="generation">
+        </label>
+        <button class="btn btn-outline-primary theme" type=submit id="generationTheme">
+        <span class="badge bg-secondary">Generation </span> : 
+            <%=@exPkmn.species.generation.name%>
+            </button>
+    </form>
+
+
+    <form action=<%=choice_question_path%> method="get">
+        <label  style="display:none" >
+            <input type="text" name="theme" value="pokedex">
+        </label>
+        <button class="btn btn-outline-primary theme" type=submit id="pokedexTheme">
+        <span class="badge bg-secondary">Pokdex </span> : 
+           <%=@exPkmn.species.pokedex_numbers[0].entry_number%>
+            </button>
+    </form>
+    
+
+  </div>
+</div>
+</div>
+<div class="col-8">
+
+<div class="card subThemePanel">
+    <div class="card-body ">
+        <h5 class="card-title "> Question SubTheme</h5>
+        <div class="d-flex">
+            <%if ["name","pokedex","sprite","move"].include?(session[:currentTheme])%>
+                <form action=<%=choice_question_path%> method="get" class="d-block">
+                    <label  style="display:none" >
+                        <input type="text" name="page" value="<%=session[:currentPage].to_i-1%>">
+                    </label>
+                    <button class="btn btn-outline-primary" type=submit>
+                    <span class="badge bg-secondary">< </span> </button>
+                </form>
+                <% @minPage;@maxPage;if @numPage<10 then @minPage=1 and @maxPage=11 elsif @numPage>10 and @numPage<@numberPages-10 then @minPage=@numPage.to_i-5 and @maxPage=@numPage.to_i+5  elsif @numPage>@numberPages-10 then @minPage=@numberPages-11 and @maxPage=@numberPages end%>
+                <% for i in @minPage..@maxPage%>
+                    <form action=<%=choice_question_path%> method="get">
+                    <label  style="display:none" >
+                        <input type="text" name="page" value="<%=i%>">
+                    </label>
+                    <button class="<%=if session[:currentPage].to_i==i then "btn btn-primary" else "btn btn-outline-primary" end%>" type=submit>
+                    <span class="badge bg-secondary"><%=i%></span> </button>
+                </form>
+                <%end%>
+                <form action=<%=choice_question_path%> method="get" class="col-1">
+                    <label  style="display:none" >
+                        <input type="text" name="page" value="<%=session[:currentPage].to_i+1%>">
+                    </label>
+                    <button class="btn btn-outline-primary" type=submit >
+                    <span class="badge bg-secondary">> </span></button>
+                    </button>
+                </form>
+            <%end%>
+        </div>
+
+            <div id="updtSubPanel col" class="">
+                
+                <% @loop =(@numPage.to_i-1)*24+1;@queryResults.each do |q|%>
+                    <%if @spriteON %>
+                        <div class="btn btn-outline-primary subChoice" id="<%=@loop%>">
+                            <div>
+                            <img src="<%=q[0]%>" alt="" />
+                            </div>
+                            <span class="badge bg-secondary"><%=q[1]%> </span>
+                        </div>
+                    <%elsif session[:currentTheme] =="type"%>
+                        <div class="btn btn-outline-primary subChoice" id="<%=@loop%>" >
+                            <span class="badge bg-secondary"><%=q%> </span>
+                        </div>
+                    <%else%>
+                        <div class="btn btn-outline-primary subChoice" id="<%=@loop%>">
+                            <span class="badge bg-secondary"><%=q[0]%> </span>
+                            <%=q[1]%>
+                        </div>
+                    <%end%>
+                <% @loop=@loop+1%>
+                <%end%>
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<script>
+    var chosenType=document.getElementById("<%=session[:currentType]%>"+"Type")
+    var chosenTheme=document.getElementById("<%=session[:currentTheme]%>"+"Theme")
+    var chosenSub=""
+    var btnType=Array.from(document.getElementsByClassName("type"))
+    var btnSub=Array.from(document.getElementsByClassName("subChoice"))
+    var btnTheme=Array.from(document.getElementsByClassName("theme"))
+    var availables={
+        'spriteThemes':["name","move","type","generation","pokedex"],
+        'nameThemes':["move","sprite","type","generation","pokedex"],
+        'moveThemes':["sprite","name","type","generation"],
+        'typeThemes':["sprite","name","move","generation"],
+        'generationThemes':["name","sprite","move","type"],
+        'pokedexThemes':["name","sprite"]}
+    var themeInput=document.getElementById("themeInput")
+    var typeInput=document.getElementById("typeInput")
+    var subInput=document.getElementById("subTypeInput")
+    var panelSub=document.getElementById("updtSubPanel")
+    updateAvaible(null)
+    updateType(chosenType)
+    updateTheme(chosenTheme)
+    btnType.forEach(b => {
+        b.addEventListener('click',(e)=>updateType(e.target))
+    });
+    btnTheme.forEach(b => {
+        b.addEventListener('click',(e)=>updateTheme(e.target))
+    });
+    
+    btnSub.forEach(b => {
+        b.addEventListener('click',(e)=>updateSub(e.target))
+    });
+
+    
+
+
+    function updateForm(choice,which){
+        let type=""
+        let char=choice.id[0]
+        let i=0
+        while(char!=char.toUpperCase()){
+            type=type+char
+            i++
+            char=choice.id[i]
+            if(char==undefined){
+                break
+            }
+        }
+        if(which=="type"){
+            typeInput.setAttribute('value',type)
+            updateAvaible(type)
+        }else if(which=="theme"){
+            themeInput.setAttribute('value',type)
+        }else{
+
+            subInput.setAttribute('value',choice.id)
+        }
+    console.log(typeInput,themeInput,subInput)
+
+
+    }
+    function updateType(target){
+        if(target.className.includes("type")){
+            if(chosenType){
+                chosenType.className="btn btn-outline-primary type"
+            }
+            target.className="btn btn-info type"
+            chosenType=target
+            updateForm(chosenType,"type")
+        }}
+
+
+    function updateAvaible(choice){
+        btnTheme.forEach(b => {
+            document.getElementById(b.id).className="btn btn-outline-secondary theme disabled"
+        });
+        if(choice){
+        var available=availables[choice+"Themes"]
+        available.forEach(a => {
+            document.getElementById(a+"Theme").className="btn btn-outline-primary theme "
+        })}}
+
+    function updateTheme(target){
+        if(target.className.includes("theme")){
+            if(chosenTheme){
+                chosenTheme.className="btn btn-outline-primary theme"
+            }
+            target.className="btn btn-info theme"
+            chosenTheme=target
+            updateForm(chosenTheme,"theme")
+        }}
+
+    function updateSub(target){
+        if(target.className.includes("subChoice")){
+            if(chosenSub){
+                chosenSub.className="btn btn-outline-primary subChoice"
+            }
+            target.className="btn btn-info thsubChoiceeme"
+            chosenSub=target
+            updateForm(chosenSub,"subChoice")
+        }}       
+
+</script>
+

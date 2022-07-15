@@ -1,0 +1,19 @@
+<div>
+<h2>My Account </h2>
+<div>
+<span>My username</span>
+<span><%= current_user.username%></span>
+</div>
+<div>
+<span>Date of creation</span>
+<span><%= current_user.created_at%></span>
+</div>
+<div>
+<span>Email</span>
+<span><%= current_user.email%></span>
+</div>
+<div>
+<a href="<%=edit_user_registration_path%>"class="btn btn-warning">Eiter le compte</a>
+</div>
+
+</div>

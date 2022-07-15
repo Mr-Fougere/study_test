@@ -1,0 +1,28 @@
+<%if session[:currentQuiz] %>
+  <div class="alert alert-warning" role="alert">
+    <a href="<%=quiz_path(session[:currentQuiz].to_i)%>">
+      Vous n'avez pas fini votre dernier quiz ! Continuez ?
+    </a>
+  </div>
+<%end%>
+<% @quizz.each do |quiz| %>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Quizz n°<%= quiz.id%> </h5>
+        <p class="card-text">Difficulté :<%= quiz.difficulty%></p>
+        <%if session[:currentQuiz].to_i==quiz.id.to_i %>
+         <a href="<%=quiz_path(session[:currentQuiz].to_i)%>" class="btn btn-info">
+        Reprendre le quiz
+        </a>
+        <%else%>
+         <a href="<%=start_quiz_path(id:quiz.id)%>" class="btn btn-primary">
+        Commencer le quiz
+        </a>
+        <%end%>
+        
+      </div>
+    </div>
+
+<%end%>
+

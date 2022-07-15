@@ -1,0 +1,74 @@
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Quizz n°<%= @quiz.id%>/Question <%=session[:currentQuestion].to_i+1%></h5>
+        <h3><%= @question["question"]%></h3>
+        <div id="panelAnswers">
+
+        </div>
+        
+        </div>
+
+        <form action=<%=check_quiz_path(id:@quiz.id)%> method="post">
+            <label  style="display:none" ><input type="text" id="inputAnswer" name="user_answer" value="user_answer"></label>
+            <%if session[:status]==0%>
+                <input class="btn btn-info" type="submit" id="btnConfirm"   value="Valider son choix">
+            <%else%>
+                <input class="btn btn-success" type="submit" id="btnConfirm"   value="Question suivante">
+            <%end%>
+                <h4><%=if @goodAnswer==@userAnswer then "Bonne réponse ! Bien joué" else "Mauvaise réponse ! Dommage" end if @goodAnswer and @userAnswer %></h4>
+        </form>
+
+    </div>
+
+<script>
+    var chosenAnswer=""
+    var answers=document.getElementsByClassName("btnAnswer")
+    var panel=document.getElementById("panelAnswers")
+    var input=document.getElementById("inputAnswer")
+    var confirmBtn=document.getElementById("btnConfirm")
+    var arr_answers=["<%= @question["answer1"]%>","<%= @question["answer2"]%>","<%= @question["answer3"]%>","<%= @question["answer4"]%>"]
+    
+    for (let i = 1; i < 5; i++) {
+    if("<%=@sprite%>"=="true"){
+        panel.append(Object.assign(document.createElement('img'),
+         { className: 'btn btn-outline-primary btnAnswer', 
+         id:"btnAnswer"+i,src:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+arr_answers[i-1]+".png" }))
+    }else{
+        panel.append(Object.assign(document.createElement('div'),
+         { className: 'btn btn-outline-primary btnAnswer', 
+         id:"btnAnswer"+i,textContent: arr_answers[i-1]}))
+
+        }
+    }
+    answers=Array.from(answers)
+    answers.forEach(a => {
+        a.addEventListener("click",(e)=>updateChosen(e))
+    });
+    if("<%=session[:status]%>"==1){
+        answers.forEach(a => {
+            a.className="btn btn-outline-primary btnAnswer disabled";
+            if(a.id.slice(-1).toString()=="<%=@userAnswer%>"){
+                a.className="btn btn-danger btnAnswer disabled";
+            }
+            if(a.id.slice(-1).toString()=="<%=@goodAnswer%>"){
+                a.className="btn btn-success btnAnswer disabled";
+            }
+        });
+
+    }else{
+                console.log("je suis ici")
+
+        confirmBtn.disabled=true
+    }
+
+    function updateChosen(event){
+        document.getElementById(event.target.id).className="btn btn-primary btnAnswer"
+        confirmBtn.disabled=false
+        if(chosenAnswer!=""){
+            document.getElementById(chosenAnswer).className="btn btn-outline-primary btnAnswer" 
+        }
+        chosenAnswer=event.target.id
+        input.value=event.target.id.slice(-1)
+    }
+    
+</script>
