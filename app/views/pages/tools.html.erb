@@ -1,4 +1,5 @@
 <div class="d-flex">
+<%png=Proc.new {|tool|"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/"+case tool when "create" then"lucky-egg"when "modify" then"journal"when "delete" then"lucky-punch"when"purpose"then"oaks-letter" end+".png"}%>
 <% @quizTools.each do |tool|%>
 <a class="tool-card nav-link m-2 col-2 position-relative"
     href="<%=case tool when "create" then new_quiz_path  when "modify" then modify_quiz_path when "delete" then delete_quiz_path end%>">
@@ -7,7 +8,7 @@
         <div class="slot-icon">
         <img 
           class="icon-tool"
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/<%=case tool when "create" then"lucky-egg"when "modify" then"journal"when "delete" then"lucky-punch" end%>.png"
+          src=<%=png.call(tool)%>
           alt="icon-tool"/>
       </div>
       </div>
@@ -35,7 +36,7 @@
         <div class="slot-icon">
         <img 
           class="icon-tool"
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/<%=case tool when "create" then"lucky-egg"when "modify" then"journal"when "delete" then"lucky-punch" end%>.png"
+          src=<%=png.call(tool)%>
           alt="icon-tool"/>
       </div>
       </div>

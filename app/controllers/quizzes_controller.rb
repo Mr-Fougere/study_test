@@ -2,13 +2,16 @@ class QuizzesController < ApplicationController
   def index
     @quizz=Quiz.all
     @user=User.new
-    if current_user
+    if current_user 
+      if current_user[:currentQuestion] !=nil
       session[:currentQuestion]=current_user[:currentQuestion]
       session[:currentQuiz]=current_user[:currentQuiz]
       session[:goodAnswer]=current_user[:goodAnswer]
     end
-    @current_methode="index"
-  end
+    puts current_user.inspect
+    end
+      @current_methode="index"
+    end
 
   def edit
     @quiz=Quiz.find(params[:id])
@@ -24,7 +27,6 @@ class QuizzesController < ApplicationController
     redirect_to results_quiz_path(id:params[:id]) and return
     end
     if session[:currentQuestion] and session[:currentQuiz]==params[:id]
-      puts "ici"
       @questionUser=session[:currentQuestion]
     else
         if session[:currentQuiz]!=params[:id]
@@ -33,9 +35,9 @@ class QuizzesController < ApplicationController
           @questionUser=1
         end
     end
-
-
-    if session[:currentQuestion].to_s!=params[:question].to_s
+    
+    puts session[:currentQuestion].to_s!=params[:question].to_s 
+    if (session[:currentQuestion].to_s!=params[:question].to_s or params[:user_answer] )and session[:currentQuiz].to_s==params[:id].to_s
       @question=Question.find(@quiz.send("question#{params[:question]}_id"))
       @goodAnswer=Question.find(@question.id)["goodAnswer"]
       @userAnswer=params[:user_answer].to_s
@@ -56,14 +58,20 @@ class QuizzesController < ApplicationController
 
   def check
     @user=User.new
+    puts "-------"
     puts params.inspect
-    if params[:question]=="1" and !session[:currentQuestion]
+    puts current_user.inspect
+    puts session[:currentQuiz]
+    puts session.inspect
+    puts "-------"
+
+    if params[:question]=="1" and session[:currentQuiz]!=params[:id]
       @status = true
     else
       @status = params[:question].to_s==session[:currentQuestion].to_s  
     end 
     if @status 
-      if session[:currentQuestion] and session[:currentQuiz] and session[:goodAnswer]
+      if session[:currentQuestion] and session[:currentQuiz] and session[:goodAnswer] and session[:currentQuiz].to_s==params[:id].to_s
         session[:currentQuestion]=session[:currentQuestion].to_i+1
       else
         session[:currentQuestion]=2
@@ -79,14 +87,14 @@ class QuizzesController < ApplicationController
       else
         user=User.find(1)
       end
-      if session[:currentQuestion]>5
-        user[:goodAnswer]=nil
-        user[:currentQuestion]=nil
-        user[:currentQuiz]=nil
-      else 
+      if session[:currentQuestion]<=5
         user[:goodAnswer]=session[:goodAnswer]
         user[:currentQuestion]=session[:currentQuestion]
         user[:currentQuiz]=session[:currentQuiz]
+      else 
+        user[:goodAnswer]=nil
+        user[:currentQuestion]=nil
+        user[:currentQuiz]=nil
       end
       params[:user]=ActionController::Parameters.new({user:user})
       user_params=params.require(:user).permit(:id,:username,:goodAnswer,:currentQuestion,:currentQuiz)
@@ -100,10 +108,7 @@ class QuizzesController < ApplicationController
   def results
       @quiz=Quiz.find(params[:id])
       @good=session[:goodAnswer] 
-    
-    resetSession()
-
-
+        resetSession()
   end
 
   def new

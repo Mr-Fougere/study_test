@@ -1,5 +1,9 @@
    
-   <% if session[:currentQuestion] then  @status= session[:currentQuestion].to_s==@numQuestion.to_s else @status=true end%>
+   <% if session[:currentQuestion] then if session[:currentQuiz].to_s!=@quiz.id.to_s then @status=true else @status= session[:currentQuestion].to_s==@numQuestion.to_s end else @status=true end%>
+<%puts @numQuestion%>
+<%puts session[:currentQuestion]%>
+<%puts @goodAnswer%>
+<%puts session[:currentQuestion].to_s==@numQuestion.to_s%>
 <div class="quiz-page">
 <div class=panel-full-question>
     <div class="panel-ward">
@@ -8,7 +12,6 @@
     <div class="panel-question">
         <h2><%= @question["question"]%></h3>
     </div>
-
     <div class="panel-answers">
         <div class="panel-answer-left">
             <div class="panel-btn col-6" >

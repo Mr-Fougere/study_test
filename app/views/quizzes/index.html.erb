@@ -16,7 +16,7 @@
 <% @categories=["Pokemon","Move","Sprite","Type"]%>
 <% @quizz.each do |quiz| %>
     <a class="quiz-card nav-link m-2 col-2 position-relative"
-              href=<%if session[:currentQuiz].to_i== quiz.id.to_i %>
+              href=<%if session[:currentQuiz].to_i== quiz.id.to_i   %>
               <%=quiz_path(id:quiz.id,question:session[:currentQuestion])%>
               <%else%>
               <%=quiz_path(id:quiz.id,question:1)%>
