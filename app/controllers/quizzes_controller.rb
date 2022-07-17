@@ -1,6 +1,13 @@
 class QuizzesController < ApplicationController
   def index
     @quizz=Quiz.all
+    @user=User.new
+    if current_user
+      session[:currentQuestion]=current_user[:currentQuestion]
+      session[:currentQuiz]=current_user[:currentQuiz]
+      session[:goodAnswer]=current_user[:goodAnswer]
+    end
+    @current_methode="index"
   end
 
   def edit
@@ -9,61 +16,94 @@ class QuizzesController < ApplicationController
     
   end
 
-  def start
-    puts "le quizz commence"
-      @quiz=Quiz.find(params[:id])
-      session[:currentQuiz]=params[:id]
-      session[:currentQuestion]=0
-      session[:goodAnswer]=0
-      session[:status]=0
-      session[:userAnswer]=0
-      session[:questions]=[Question.find(@quiz.question1_id),Question.find(@quiz.question2_id),Question.find(@quiz.question3_id),Question.find(@quiz.question4_id),Question.find(@quiz.question5_id)]
-      redirect_to quiz_path(params[:id])  
-  end
-
   def show
+    @user=User.new
     @quiz=Quiz.find(params[:id])
-    @question=session[:questions][session[:currentQuestion].to_i]
-    if @question["themes"]=="sprite"
+
+    if params[:question].to_i>5
+    redirect_to results_quiz_path(id:params[:id]) and return
+    end
+    if session[:currentQuestion] and session[:currentQuiz]==params[:id]
+      puts "ici"
+      @questionUser=session[:currentQuestion]
+    else
+        if session[:currentQuiz]!=params[:id]
+          @questionUser=params[:question]
+        else
+          @questionUser=1
+        end
+    end
+
+
+    if session[:currentQuestion].to_s!=params[:question].to_s
+      @question=Question.find(@quiz.send("question#{params[:question]}_id"))
+      @goodAnswer=Question.find(@question.id)["goodAnswer"]
+      @userAnswer=params[:user_answer].to_s
+      @numQuestion=params[:question]
+    else
+      @question=Question.find(@quiz.send("question#{@questionUser}_id"))
+      @goodAnswer=nil
+      @userAnswer=nil
+      @numQuestion=@questionUser
+    end
+
+    if @question['themes']=="sprite"
       @sprite=true
     else
       @sprite=false
     end
-    if session[:status]==1
-      puts "status a 1 dans show"
-
-      @goodAnswer=session[:questions][session[:currentQuestion]]["goodAnswer"].to_s
-      @userAnswer=session[:userAnswer].to_s
-    else
-      @goodAnswer=nil
-      @userAnswer=nil
-    end
-
   end
 
   def check
-    if session[:status]==0 and session[:questions][session[:currentQuestion]]["goodAnswer"]==params[:user_answer].to_i
-      session[:goodAnswer]=session[:goodAnswer].to_i+1
-    end
-    if session[:status]==0
-      session[:status]=1
-      session[:userAnswer]=params[:user_answer]
-      redirect_to quiz_path(params[:id]) and return
+    @user=User.new
+    puts params.inspect
+    if params[:question]=="1" and !session[:currentQuestion]
+      @status = true
     else
-      session[:status]=0
-      if session[:currentQuestion]<4
-        redirect_to quiz_path(params[:id])
+      @status = params[:question].to_s==session[:currentQuestion].to_s  
+    end 
+    if @status 
+      if session[:currentQuestion] and session[:currentQuiz] and session[:goodAnswer]
         session[:currentQuestion]=session[:currentQuestion].to_i+1
       else
-        session.delete(:currentQuestion)
-        session.delete(:currentQuiz)
-        session.delete(:questions)
-        redirect_to results_quiz_path(params[:id])
+        session[:currentQuestion]=2
+        session[:currentQuiz]=params[:id]
+        session[:goodAnswer]=0
+      end 
+      if Question.find(Quiz.find(params[:id]).send("question#{params[:question]}_id"))["goodAnswer"]==params[:user_answer].to_i
+          session[:goodAnswer]=session[:goodAnswer].to_i+1
       end
+      
+      if current_user
+        user=current_user
+      else
+        user=User.find(1)
+      end
+      if session[:currentQuestion]>5
+        user[:goodAnswer]=nil
+        user[:currentQuestion]=nil
+        user[:currentQuiz]=nil
+      else 
+        user[:goodAnswer]=session[:goodAnswer]
+        user[:currentQuestion]=session[:currentQuestion]
+        user[:currentQuiz]=session[:currentQuiz]
+      end
+      params[:user]=ActionController::Parameters.new({user:user})
+      user_params=params.require(:user).permit(:id,:username,:goodAnswer,:currentQuestion,:currentQuiz)
+      user.update(user_params)
+      redirect_to quiz_path(id:params[:id],question:params[:question],user_answer:params[:user_answer])
+    else
+      redirect_to quiz_path(id:params[:id],question:session[:currentQuestion],user_answer:params[:user_answer])
     end 
-  end
+    end
+
   def results
-    @quiz=Quiz.find(params[:id])
+      @quiz=Quiz.find(params[:id])
+      @good=session[:goodAnswer] 
+    
+    resetSession()
+
+
   end
 
   def new
@@ -73,6 +113,11 @@ class QuizzesController < ApplicationController
 
   end
 
+  def resetSession
+    session.delete("currentQuestion")
+    session.delete("goodAnswer")
+    session.delete("currentQuiz")
+  end
 
   def destroy
 
@@ -97,6 +142,9 @@ class QuizzesController < ApplicationController
     quiz_params=params.require(:quiz).permit(:question1_id,:question2_id,:question3_id,:question4_id,:question5_id,:difficulty)
     @quiz.update(quiz_params)
     session[:update] = "Quiz n°"+@quiz.id.to_s+" mis à jour avec succés"
+    puts quiz_params
+    puts quiz_params.inspect
+    puts quiz_params.inspect
 
     redirect_to quizzes_path
   end

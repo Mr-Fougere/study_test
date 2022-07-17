@@ -1,24 +1,42 @@
-<%      good=session[:goodAnswer]
-      session.delete(:goodAnswer)%>
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Quizz n°<%= @quiz.id%></h5>
-          <span id="results">
-            <%case good%>
-            <%when 3 %>
-            Bravo vous avez réussi avec <%=good%> bonnes réponses sur 5
-            <%when 4 %>
-            Bravo vous avez réussi avec <%=good%> bonnes réponses sur 5 ! Vous y étiez presque 
-            <%when 5 %>
-            Parfait vous avez répondu bon à toutes les questions !
-            <%else%>
-            Raté vous avez eu seulement <%=good%> bonnes réponses sur 5 ! Reesayer 
-            <%end%>
-          </span> 
-        </div>
-        <a href="<%=start_quiz_path(id:@quiz.id)%>" type="button" class="btn btn-info" id="btnConfirm">Réessayer</a>
 
-        <a href="<%=root_path%>" type="button" class="btn btn-info" id="btnNext">Retourner à l'accueil</a   >
+<div class="result-page">
+  <div class=panel-full-results>
+    <div class="porygon-result">
+    <%=case @good
+  when nil,0,1,2
+    image_tag "porygon.png"
+  when 3,4
+    image_tag "porygon2.png"
+  else 
+    image_tag "porygonz.png"
+      end%>    
+      </div>
+      <div class="panel-question">
+        <h2 id="results">
+      <%=if @good.to_i>2 then "Congratulations you success the Quiz n°"+@quiz.id.to_s+" !"else "Sorry you lose !" end%>
+      You got <%=@good%> on 5 answers            
+     </h2> 
+    </div>
+      
+    <div class="panel-action">
+        
+        <%if @good.to_i<5%>
+            <a href="<%=quiz_path(id:@quiz.id,question:1)%>" type="button" class="btn-next nav-link retry-quiz" id="btnConfirm">
+              <span>Réessayer</span>
+            </a>
+        <%end%>
+        <a href="<%=root_path%>" type="button" class="nav-link btn-next back-home" id="btnNext">
+            <span>Retourner à l'accueil</span>
+        </a>
 
       </div>
+
+    </div>
+    </div>
+</div>
+    
+    
+  
+ 
+        
 

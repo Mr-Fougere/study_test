@@ -1,20 +1,56 @@
 <div class="d-flex">
 <% @quizTools.each do |tool|%>
+<a class="tool-card nav-link m-2 col-2 position-relative"
+    href="<%=case tool when "create" then new_quiz_path  when "modify" then modify_quiz_path when "delete" then delete_quiz_path end%>">
+      <div class="band-tool-card">
+      <div class="slot-left">
+        <div class="slot-icon">
+        <img 
+          class="icon-tool"
+          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/<%=case tool when "create" then"lucky-egg"when "modify" then"journal"when "delete" then"lucky-punch" end%>.png"
+          alt="icon-tool"/>
+      </div>
+      </div>
+          <h5 class="card-title"><%=tool.capitalize%> a Quiz </h5>      
+        </div>
+      <div class="body-card row g-0">
+          <%case tool%>
+          <%when "create"%>
+            Choose five question among all questions availabes
+          <%when "modify"%>
+            Modify the five question of a chosen quiz          
+          <%when "delete" %>
+            Delete a chosen quiz (admin only)
+          <%end%>
 
-    <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title"><%=tool.capitalize%> a Quiz </h5>
-    <a type="button" class="btn btn-info"  href="<%=case tool when "create" then new_quiz_path  when "modify" then modify_quiz_path when "delete" then delete_quiz_path end%>"> Use this tool</a>
-  </div>
-</div>
+      </div>
+    </a>
 <%end%>
 <% @questionTools.each do |tool|%>
 
-    <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title"><%=tool.capitalize%> a Question</h5>
-    <a type="button" class="btn btn-info"  href="<%=case tool when "create" then choice_question_path(start:true)  when "modify" then modify_question_path when "delete" then delete_question_path end%>"> Use this tool</a>
-  </div>
-</div>
+<a class="tool-card nav-link m-2 col-2 position-relative"
+    href="<%=case tool when "create" then choice_question_path(start:true)  when "modify" then modify_question_path when "delete" then delete_question_path end%>">
+      <div class="band-tool-card">
+      <div class="slot-left">
+        <div class="slot-icon">
+        <img 
+          class="icon-tool"
+          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/<%=case tool when "create" then"lucky-egg"when "modify" then"journal"when "delete" then"lucky-punch" end%>.png"
+          alt="icon-tool"/>
+      </div>
+      </div>
+          <h5 class="card-title"><%=tool.capitalize%> a Question </h5>      
+        </div>
+      <div class="body-card row g-0">
+      <%case tool%>
+          <%when "create"%>
+            Choose a theme's, a question's type and we do the rest
+          <%when "modify"%>
+            Modify the five question of a chosen quiz          
+          <%when "delete" %>
+            Delete a chosen quiz (admin only)
+          <%end%>
+      </div>
+    </a>
 <%end%>
 </div>

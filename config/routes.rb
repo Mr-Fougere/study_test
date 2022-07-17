@@ -2,10 +2,7 @@ Rails.application.routes.draw do
    devise_for :users
    get 'questions/index'
    root to:'quizzes#index'
-   get '/quizzes/:id/start',to:'quizzes#start',as:'start_quiz'
    post '/question/choices',to:'questions#choices'
-   post '/quizzes/:id/check',to:'quizzes#check',as:'check_quiz'
-   post '/quizzes/:id',to:'quizzes#show'
    get '/user/account', to:'pages#user',as:'user'
    get "/tools/create" => redirect("/quizzes/new")
    get '/metronome',to:'pages#metronome',as:'metronome'
@@ -19,6 +16,8 @@ Rails.application.routes.draw do
    get '/quizzes/:id/results',to:'quizzes#results',as:'results_quiz'
    resources :questions
    resources :quizzes
+   patch '/quizzes/:id/check',to:'quizzes#check',as:'check_quiz'
+
 
 
 

@@ -9,6 +9,9 @@ class PagesController < ApplicationController
     end
 
     def user 
+        if !current_user
+            redirect_to new_user_session_path
+        end
 
     end 
 
@@ -21,7 +24,7 @@ class PagesController < ApplicationController
             role=current_user.role
             if role=="admin"
                 @quizTools =["create","modify","delete"]   
-                @questionTools =["create","delete"]    
+                @questionTools =["create"]    
  
             end
         end
