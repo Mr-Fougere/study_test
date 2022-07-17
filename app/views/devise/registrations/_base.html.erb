@@ -1,0 +1,15 @@
+<div class="login-page"> 
+  <div class="panel-porygon">
+    <a class="porygon" href="<%=new_session_path(resource_name)%>"> <%=image_tag "porygon2.png",class:"reverse"%></a>
+
+  </div>
+
+  <div class="panel-form">
+    <%= render "devise/registrations/speech" %>
+  </div>
+
+  <div class="panel-okeoke">
+      <a class="okeoke"href="<%=new_registration_path(resource_name)%>" ><%= image_tag "okeoke.png",class:"okeoke"%> </a>
+  </div>
+</div>
+

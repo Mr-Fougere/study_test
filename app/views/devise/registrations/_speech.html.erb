@@ -1,0 +1,213 @@
+<%###lg-in##%>
+
+<%puts request.original_url %>
+<%- if request.original_url.include?("sign_in") %>
+
+    <div class="speech">
+
+  <svg class="bull-speech-porygon"width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+        <path d="m50,50 v300 a5,5 0 0 0 5,5 h400 a5,5 0 0 0 5,-5 v-325 a5,5 0 0 0 -5,-5 h-440 l32.5,25 a5,5 0 0 1 2.5,5 z+-3-*" 
+        stroke="#19508Bff" 
+        stroke-width=5
+        fill="white"
+        stroke-linejoin="round" />
+        
+  </svg>  
+  <svg class="bull-speech-okeoke"width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+        <path d="m50,70 v40 a5,5 0 0 0 5,5 h400 a5,5 0 0 0 5,-5 v-85 a5,5 0 0 0 -5,-5 h-440 l32.5,25 a5,5 0 0 1 2.5,5 z" 
+        stroke="#19508Bff" 
+        stroke-width=5
+        fill="white"
+        stroke-linejoin="round" />
+        
+  </svg> 
+
+    <div class="form-login">
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="field"> 
+                <h3 class="hello"> Hello human ! </h3>
+                <h4> How do you name yourself ?</h4>
+                <%= f.text_field :login, autofocus: true %>
+            </div>
+
+            <div class="field">
+                <h4 >Do you know your password ?</h4>
+                <%= f.password_field :password, autocomplete: "current-password" %>
+            </div>
+
+            <% if devise_mapping.rememberable? %>
+                <div class="field">
+                <%= f.check_box :remember_me ,class:"form-check-input",type:"checkbox"%>
+                <%= f.label "Should I remember you ?" %>
+                </div>
+            <% end %>
+
+            <div class="">
+                <%= f.submit "Enter into the matrix " ,data:{turbo:false},class:"btn-submit btn btn-primary"%>
+            </div>
+        <% end %>
+    </div>
+    <div class="user-help">
+    <%= render "devise/shared/links" %>
+    </div>
+</div>
+
+
+<% end %>
+
+
+<%###sign-in##%>
+
+
+
+<%- if request.original_url.include?("sign_up") %>
+
+<div class="speech">
+    <svg class="bull-speech-okeoke"width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+            <path d="m50,70 v385 a5,5 0 0 0 5,5 h400 a5,5 0 0 0 5,-5 v-430 a5,5 0 0 0 -5,-5 h-440 l32.5,25 a5,5 0 0 1 2.5,5 z" 
+            stroke="#19508Bff" 
+            stroke-width=5
+            fill="white"
+            stroke-linejoin="round" />
+            
+    </svg> 
+    <div class="form-registration">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+        <div class="field">
+        <h3 class="hello">You want to register ?</h3>
+            <h4>What's your username ?</h4>
+            <%= f.text_field :username,autocomplete: "username" %>
+        </div>
+        <% if resource.errors.include?(:username) %>
+
+            <div id="error_username"class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+            <div class="toast-body">
+                <ul>
+                <% resource.errors.full_messages_for(:username).each do |message| %>
+                <li><%= message %></li>
+                <% end %>
+            </ul>
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+            <%end%>
+
+        <div class="field">
+            <h4>Have you an email ? </h4>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        </div>
+        <% if resource.errors.include?(:email) %>
+
+            <div id="error_email" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+            <div class="toast-body">
+                <ul>
+                <% resource.errors.full_messages_for(:email).each do |message| %>
+                <li><%= message %></li>
+        <% end %>
+    </ul> 
+      </div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+    <%end%>
+    <div class="field">
+        <h4>Your secret password  </h4>
+        <%= f.password_field :password, autocomplete: "new-password" %>
+        <% if resource.errors.include?(:password) %>
+
+        <div id="error_password"class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+        <div class="toast-body">
+            <ul>
+            <% resource.errors.full_messages_for(:password).each do |message| %>
+            <li><%= message %></li>
+            <% end %>
+        </ul>  
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        </div>
+        <%end%>
+    </div>
+    <div class="field">
+    <h4>Your secret password again </h4> 
+   <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+   <% if resource.errors.include?(:password_confirmation) %>
+
+    <div id="error_password_confirmation"class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+         <ul>
+        <% resource.errors.full_messages_for(:password_confirmation).each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+    </ul>  
+      </div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    </div>
+    <%end%>
+    </div>
+    <div class="actions">
+    <%= f.submit "Sign up" ,data:{turbo:false},class:"btn-submit btn btn-primary",id:"submit-btn" %>
+  </div>
+    <% end %>
+</div>
+</div>
+
+<% end %>
+
+<%###forgot passwor##%>
+
+<%- if devise_mapping.recoverable? && controller_name == 'passwords' && controller_name != 'registrations' %>
+
+
+<div class="speech"> 
+
+
+  <svg class="bull-speech-okeoke"width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+        <path d="m50,70 v200 a5,5 0 0 0 5,5 h400 a5,5 0 0 0 5,-5 v-245 a5,5 0 0 0 -5,-5 h-440 l32.5,25 a5,5 0 0 1 2.5,5 z" 
+        stroke="#19508Bff" 
+        stroke-width=5
+        fill="white"
+        stroke-linejoin="round" />   
+  </svg> 
+
+    <div class="form-password">
+
+    <h2 class="hello">Forgot your password?</h2>
+    <div class="form_password">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="field">
+            <h4>What's your email  ?</h4>
+
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div class="actions">
+        <%= f.submit "Send me reset password instructions",class:"btn-submit btn btn-primary",id:"submit-btn" %>
+    </div>
+    </div>
+<% end %>
+
+</div>
+</div>
+
+
+
+
+<% end %>
+
+
+<script>
+var toasts = Array.from(document.getElementsByClassName("toast"))
+toasts.forEach(element => {
+  new bootstrap.Toast(element).show()
+});
+</script>

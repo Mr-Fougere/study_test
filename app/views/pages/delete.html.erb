@@ -1,0 +1,13 @@
+<% @quizz.each do |quiz| %>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Quizz n°<%= quiz.id%></h5>
+        <p class="card-text">Difficulté :<%= quiz.difficulty%></p>
+<%= link_to t('navigation.delete'), quiz_path(quiz.id), data: { "turbo-method": :delete,"turbo-confirm": "Valider la suppression ?" }, class: "btn btn-danger ml-3" %>    </div>
+<%if session[:delete]%>
+  <div class="alert alert-success"><%= session[:delete]%></div>
+<%session.delete(:delete)%>
+<%end%>
+
+<%end%>

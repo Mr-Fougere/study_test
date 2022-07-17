@@ -1,0 +1,19 @@
+<%arr_question=[] %>
+<%@questions.each{ |q| arr_question.append(q.id)}%>
+
+<div>
+<span>Création d'un quizz <%=@quiz.id%></span>
+
+<%= form_for @quiz do |f|%>
+    <%=f.select :question1_id, arr_question%>
+    <%=f.select :question2_id, arr_question%>
+    <%=f.select :question3_id, arr_question%>
+    <%=f.select :question4_id, arr_question%>
+    <%=f.select :question5_id, arr_question%>
+    <%=f.select :difficulty, [1,2,3,4]%>
+
+    <button type="submit" class="btn btn-primary">Create quizz</button>
+
+<%end%>
+
+</div>

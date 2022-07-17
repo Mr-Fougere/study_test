@@ -1,0 +1,140 @@
+   
+   <% if session[:currentQuestion] then  @status= session[:currentQuestion].to_s==@numQuestion.to_s else @status=true end%>
+<div class="quiz-page">
+<div class=panel-full-question>
+    <div class="panel-ward">
+        <h3>Question <%=@numQuestion%></h4>
+    </div>
+    <div class="panel-question">
+        <h2><%= @question["question"]%></h3>
+    </div>
+
+    <div class="panel-answers">
+        <div class="panel-answer-left">
+            <div class="panel-btn col-6" >
+                <div class="answer" id="answer1">
+                    <svg class="btn-quiz"width="505" height="105" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m50,2.5 h450 l-50,100  h-450 z*" 
+                            stroke="#19508Bff" 
+                            stroke-width=5
+                            fill="white"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>
+            <div class="panel-btn col-6" >
+                <div class="answer" id="answer2">
+                    <svg class="btn-quiz"width="505" height="105" xmlns="http://www.w3.org/2000/svg">
+                        <path d="m50,2.5 h450 l-50,100  h-450 z*" 
+                        stroke="#19508Bff" 
+                        stroke-width=5
+                        fill="white"
+                        stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="panel-answer-right">
+
+            <div class="panel-btn col-6" >
+                <div class="answer" id="asnwer3">
+                    <svg class="btn-quiz"width="505" height="105" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m50,2.5 h450 l-50,100  h-450 z*" 
+                            stroke="#19508Bff" 
+                            stroke-width=5
+                            fill="white"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>
+            <div class="panel-btn col-6" id="answer4">
+                <div class="answer" id="answer4">
+                    <svg class="btn-quiz"width="505" height="105" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m50,2.5 h450 l-50,100  h-450 z*" 
+                            stroke="#19508Bff" 
+                            stroke-width=5
+                            fill="white"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>  
+            </div>
+        </div>
+    <div class="panel-action">
+        <%= form_for(@user, url: check_quiz_path(id:@quiz.id,question:@numQuestion), method: :patch) do |f| %>
+            <div class="user-actions">
+            <%if @status%>
+               <label  style="display:none" ><input type="text" id="inputAnswer" name="user_answer" value="user_answer"></label>
+                <input class="btn-next action-waiting" type="submit" id="btnNext"   value="Confirm your choice">
+            <%else%>
+                <input class="  btn-next action-done" type="submit" id="btnNext "   value="Next Question">
+                <h2><%=if !@status then if @goodAnswer.to_s==@userAnswer.to_s then "Good answer! Well Done" else "Bad Answer ! Sorry" end end %></h2>
+            <%end%>
+            </div>
+        <%end%>
+
+    </div>
+    </div>
+</div>
+
+<script>
+    var chosen=""
+    var answers=Array.from(document.getElementsByClassName("answer"))
+    var input=document.getElementById("inputAnswer")
+    var confirmBtn=document.getElementById("btnNext")
+    var arr_answers=[
+        "<%= @question["answer1"]%>",
+        "<%= @question["answer2"]%>",
+        "<%= @question["answer3"]%>",
+        "<%= @question["answer4"]%>"
+        ]
+    
+        arr_answers.forEach(a => {
+            if("<%=@sprite%>"=="true"){
+                answers[arr_answers.indexOf(a)].append(Object.assign(document.createElement('img'),
+                { className: 'img-answer',id: "img-answer"+arr_answers.indexOf(a)+1,
+                src:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+a+".png" }))   
+            }else{
+                answers[arr_answers.indexOf(a)].append(Object.assign(document.createElement('div'),
+                { className: 'text-answer',id: "txt-answer"+(arr_answers.indexOf(a)+1) 
+                ,textContent: a}))
+            }})
+             
+    answers.forEach(a => {
+        a.addEventListener("click",(e)=>updateChosen(e))
+    });
+    if("<%=@status%>"!="true"){
+        answers.forEach(a => {
+            a.className="answer disabled";
+            if(a.id.slice(-1).toString()=="<%=@userAnswer%>"){
+                a.className="answer bad-answer";
+            }
+            if(a.id.slice(-1).toString()=="<%=@goodAnswer%>"){
+                a.className="answer good-answer";
+            }
+        });
+
+    }else{
+        confirmBtn.className= "btn-next action-waiting disabled "
+    }
+
+    function updateChosen(event){
+
+        if(event.target.classList.value!=="btn-quiz"){
+            console.log("ici")
+            selected=event.target.parentNode.parentNode
+            }
+        else{
+            console.log("la")
+            selected=event.target.parentNode
+        }
+                if(chosen!=""){
+            chosen.className="answer" 
+        }
+        selected.className="answer selected-answer"
+        confirmBtn.className= "btn-next action-waiting "
+        chosen=selected
+        input.setAttribute('value',selected.id.slice(-1))
+    }
+    
+</script>

@@ -1,0 +1,42 @@
+
+<div class="result-page">
+  <div class=panel-full-results>
+    <div class="porygon-result">
+    <%=case @good
+  when nil,0,1,2
+    image_tag "porygon.png"
+  when 3,4
+    image_tag "porygon2.png"
+  else 
+    image_tag "porygonz.png"
+      end%>    
+      </div>
+      <div class="panel-question">
+        <h2 id="results">
+      <%=if @good.to_i>2 then "Congratulations you success the Quiz n°"+@quiz.id.to_s+" !"else "Sorry you lose !" end%>
+      You got <%=@good%> on 5 answers            
+     </h2> 
+    </div>
+      
+    <div class="panel-action">
+        
+        <%if @good.to_i<5%>
+            <a href="<%=quiz_path(id:@quiz.id,question:1)%>" type="button" class="btn-next nav-link retry-quiz" id="btnConfirm">
+              <span>Réessayer</span>
+            </a>
+        <%end%>
+        <a href="<%=root_path%>" type="button" class="nav-link btn-next back-home" id="btnNext">
+            <span>Retourner à l'accueil</span>
+        </a>
+
+      </div>
+
+    </div>
+    </div>
+</div>
+    
+    
+  
+ 
+        
+

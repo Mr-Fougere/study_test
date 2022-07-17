@@ -1,0 +1,276 @@
+ <span id="span">Question :</span> <span id="spanQuestion">
+ <%case session[:currentType] %>
+   <% when "generation"%>
+         which generation introduced <%=@dataQuestion[0][0]%> ?
+   <% when "sprite"%>
+        which pokemon is <%=@dataQuestion[0][1]%> ?
+   <% end%>
+ 
+ </span>
+<%= form_for @question do |f|%>
+    <label  style="display:none" >
+    <input type="text" id="questionInput" name="quest" value="question">
+    </label>
+
+    <label  style="display:none" >
+    <input type="text" id="goodAnswerInput" name="goodAnswer" value="goodAnswer">
+    </label>
+
+    <label  style="display:none" >
+    <input type="text" id="themeInput" name="theme" value="theme">
+    </label>
+
+    <label  style="display:none" >
+    <input type="text" id="typeInput" name="type" value="type">
+    </label>
+    <label  style="display:none" >
+    <input type="text" id="answersInput" name="answers" value="answers">
+    </label>
+    
+    <label  style="display:none" >
+    <input type="text" id="categoryInput" name="category" value="category">
+    </label>
+
+ <input class="btn btn-success" type="submit" id="btnConfirm"   
+        value="<%=if current_user[:role]=="admin" then "Create" else "Purpose" end %> the question">
+<%end%>
+
+<%@availableMethods.each do |m|%>
+    <form action=<%=new_question_path%> method="get">
+        <label  style="display:none" >
+            <input type="text" name="method" value="<%=m%>">
+        </label>
+        <button class="<%=if session[:currentMethod]==m then "btn btn-primary method" else"btn btn-outline-primary method"end%>" type=submit id="<%=m%>Method">
+        <%=m.capitalize%> Method</button>
+    </form>
+
+<%end%>
+<div class="d-flex row g-0">
+<div class="card goodAnswer col-6">
+    <div class="card-body ">
+        <h5 class="card-title "> Good Answer</h5>
+        <div class="d-flex" class="paging">
+            <%if ["name","pokedex","sprite","move"].include?(session[:currentType])%>
+                <form action=<%=new_question_path%> method="get" class="d-block">
+                    <label  style="display:none" >
+                        <input id="page"type="text" name="page" value="<%=session[:currentPageGood].to_i-1%>">
+                    </label>
+                    <label  style="display:none" >
+                        <input id="choice"type="text" name="choice" value="good">
+                    </label>
+                    <button class="btn btn-outline-primary" type=submit>
+                    <span class="badge bg-secondary">< </span> </button>
+                </form>
+                <% @minPage;@maxPage;if @pageGood<10 then @minPage=1 and @maxPage=11 elsif @pageGood>=10 and @pageGood<@countGoodPages-10 then @minPage=@pageGood.to_i-5 and @maxPage=@pageGood.to_i+5  elsif @pageGood>@countGoodPages-10 then @minPage=@pageGood-11 and @maxPage=@countGoodPages end%>
+                <% for i in @minPage..@maxPage%>
+                    <form action=<%=new_question_path%> method="get">
+                    <label  style="display:none" >
+                        <input type="text" name="page" value="<%=i%>">
+                    </label>
+                    <label  style="display:none" >
+                        <input id="choice"type="text" name="choice" value="good">
+                    </label>
+                    <button class="<%=if session[:currentPageGood].to_i==i then "btn btn-primary" else "btn btn-outline-primary" end%>" type=submit>
+                    <span class="badge bg-secondary"><%=i%></span> </button>
+                </form>
+                <%end%>
+                <form action=<%=new_question_path%> method="get" class="col-1">
+                    <label  style="display:none" >
+                        <input type="text" name="page" value="<%=session[:currentPageGood].to_i+1%>">
+                    </label>
+                    <label  style="display:none" >
+                        <input type="text" name="choice" value="good">
+                    </label>
+                    <button class="btn btn-outline-primary" type=submit >
+                    <span class="badge bg-secondary">> </span></button>
+                    </button>
+                </form>
+            <%end%>
+        </div>
+            <div id="updtGoodAnswer" class="">
+                
+                <% @loop =(@countGoodPages.to_i-1)*24+1;@dataGood.each do |q|%>
+                    <% if @spriteON==true%>
+                        <div class="btn btn-outline-success choiceGood" id="Good<%=@loop%>">
+                            <div>
+                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%=q[0]%>.png" alt="" />
+                            </div>
+                            <span class="badge bg-secondary choiceGoodSpan"><%=q[1]%></span>
+                        </div>
+                    <%elsif session[:currentTheme] =="type"%>
+                        <div class="btn btn-outline-success choiceGood" id="Good<%=@loop%>" >
+                            <span class="badge bg-secondary choiceGoodSpan"><%=q%></span>
+                        </div>
+                    <%else%>
+                        <div class="btn btn-outline-success choiceGood" id="Good<%=@loop%>">
+                            <span class="badge bg-secondary choiceGoodSpan"><%=q[0]%></span>
+                            <%=q[1]%>
+                        </div>
+                    <%end%>
+                <% @loop=@loop+1%>
+                <%end%>
+                
+            </div>   
+        </div>
+    </div>
+
+
+<div class="card badAnswer col-6">
+    <div class="card-body ">
+        <h5 class="card-title "> Bad Answer</h5>
+        <div class="d-flex" class="paging">
+            <%if ["name","pokedex","sprite","move"].include?(session[:currentType])%>
+                <form action=<%=new_question_path%> method="get" class="d-block">
+                    <label  style="display:none" >
+                        <input type="text" name="page" value="<%=session[:currentPageBad].to_i-1%>">
+                    </label>
+                    <label  style="display:none" >
+                        <input type="text" name="choice" value="bad">
+                    </label>
+                    <button class="btn btn-outline-primary" type=submit>
+                    <span class="badge bg-secondary">< </span> </button>
+                </form>
+                <%= puts @countGoodPages ; puts @countBadPages%>
+                <% @minPage;@maxPage;if @pageBad<10 then @minPage=1 and @maxPage=11 elsif @pageBad>=10 and @pageBad<@countBadPages-10 then @minPage=@pageBad-5 and @maxPage=@pageBad+5  elsif @pageBad>@countBadPages-10 then @minPage=@pageBad-11 and @maxPage=@countBadPages end%>
+                <% for i in @minPage..@maxPage%>
+                    <form action=<%=new_question_path%> method="get">
+                    <label  style="display:none" >
+                        <input type="text" name="page" value="<%=i%>">
+                    </label>
+                    <label  style="display:none" >
+                        <input type="text" name="choice" value="bad">
+                    </label>
+                    <button class="<%=if session[:currentPageBad].to_i==i then "btn btn-primary" else "btn btn-outline-primary" end%>" type=submit>
+                    <span class="badge bg-secondary"><%=i%></span> </button>
+                </form>
+                <%end%>
+                <form action=<%=new_question_path%> method="get" class="col-1">
+                    <label  style="display:none" >
+                        <input type="text" name="page" value="<%=session[:currentPageBad].to_i+1%>">
+                    </label>
+                    <label  style="display:none" >
+                        <input type="text" name="choice" value="bad">
+                    </label>
+                    <button class="btn btn-outline-primary" type=submit >
+                    <span class="badge bg-secondary">> </span></button>
+                    </button>
+                </form>
+            <%end%>
+        </div>
+
+            <div id="updtBadsAnswer" class="">
+                <% @loop =(@pageBad.to_i-1)*24+1;@dataBad.each do |q|%>
+                    <%if @spriteON %>
+                        <div class="btn btn-outline-danger choiceBad " id="Bad<%=q[0]%>">
+                            <div>
+                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%=q[0]%>.png" alt="" />
+                            </div>
+                            <span class="badge bg-secondary"><%=q[1]%></span>
+                        </div>
+                    <%elsif session[:currentType] =="type"%>
+                        <div class="btn btn-outline-primary choiceBad" id="Bad<%=q[0]%>" >
+                            <span class="badge bg-secondary choiceBadSpan"><%=q%></span>
+                        </div>
+                    <%else%>
+                        <div class="btn btn-outline-primary choiceBad" id="Bad<%=q[0]%>">
+                            <span class="badge bg-secondary choiceBadSpan"><%=q[0]%></span>
+                            <%=q[1]%>
+                        </div>
+                    <%end%>
+                <% @loop=@loop+1%>
+                <%end%>
+                
+        </div>   
+</div>
+</div>
+
+
+
+<script>
+    var chosenGood=""
+    var chosenBads=[]
+    var spanQuestion=document.getElementById("spanQuestion")
+    var inputQuestion=document.getElementById("questionInput")
+    var inputTheme=document.getElementById("themeInput")
+    var inputType=document.getElementById("typeInput")
+    var inputCategory=document.getElementById("categoryInput")
+    var inputBad=document.getElementById("answersInput")
+    var inputGood=document.getElementById("goodAnswerInput")
+    var btnGood=Array.from(document.getElementsByClassName("choiceGood"))
+    var btnBad=Array.from(document.getElementsByClassName("choiceBad"))
+    var spanGood=Array.from(document.getElementsByClassName("choiceGoodSpan"))
+
+
+    btnGood.forEach(b => {
+        b.addEventListener('click',(e)=>updateGoodChoice(e.target))
+    });
+
+    btnBad.forEach(b => {
+        b.addEventListener('click',(e)=>updateBadChoices(e.target))
+    });
+
+
+    spanGood.forEach(s=> {
+        if (s.textContent=="<%=@dataQuestion[0][1]%>"){
+            s.parentNode.className="btn btn-success choiceGood"
+            chosenGood=s
+        }   
+                updateForm()
+ 
+    });
+    function updateGoodChoice(target){
+        if(target.className.includes(" choiceGood")){
+            if(chosenGood){
+                chosenGood.className="btn btn-outline-success choiceGood"
+            }
+            target.className="btn btn-success choiceGood"
+            chosenGood=target
+        }
+                updateForm()
+
+        }
+
+    function updateBadChoices(target){
+        if(target.className.includes(" choiceBad")){
+            if(chosenBads){
+                if(chosenBads.includes(target)){
+                    chosenBads.remove(target)
+                    target.className="btn btn-outline-danger choiceBad"
+                }else{
+                    chosenBads.push(target)
+                    target.className="btn btn-danger choiceBad"
+                    if(chosenBads.length>3){
+                        chosenBads[0].className="btn btn-outline-primary choiceBad"
+                        chosenBads.shift()
+                    }
+                    
+                }
+            }
+            
+        }
+        updateForm()
+        }
+    function updateForm(){
+    inputTheme.setAttribute('value',"<%=session[:currentTheme]%>")
+    inputCategory.setAttribute('value',"<%=session[:currentType]%>")
+    inputType.setAttribute('value',"<%=session[:currentSubType]%>")
+    inputQuestion.setAttribute('value',spanQuestion.innerText)
+    tmpUpdt=[]
+    chosenBads.forEach(c => {
+        switch ("<%=session[:currentType]%>") {
+            case "generation":
+                    tmpUpdt.push(c.children[0].textContent)
+                break;
+        
+            default:
+                    tmpUpdt.push(c.id.replace(/\D/g, ""))
+                break;
+        }
+        if(""=="sprite"){}
+    });
+    inputBad.setAttribute('value',JSON.stringify(tmpUpdt))
+    inputGood.setAttribute('value',"<%=@dataQuestion[0][0]%>")
+    console.log(chosenBads,"<%=@dataQuestion[0][0]%>")
+    }
+</script>
+
