@@ -14,8 +14,8 @@ Malgré tout, j'ai pu m'y retrouvé avec mes bases en Symfony et j'ai apprécié
 Maintenant que vous en savez plus sur le projet et moi, passons à la mise en place du projet pour le tester localement.
 #  Logiciel pré-réquis 
  Il y a 3 logiciels à installer : 
- - [ ] Ruby  **-le language de programmation-**
- - [ ] Ruby on Rails **-le framework-**
+ - [ ] Ruby 2.7.0 **-le language de programmation-**
+ - [ ] Ruby on Rails 7.0.2**-le framework-**
  - [ ] WAMP, LAMP ou MAMP **-le gestionnaire de BDD-** (en fonction de votre OS)
  
 <!-- 
