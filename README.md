@@ -119,7 +119,7 @@ Voici les commandes à exécuter afin de récupérer tous les **paquets nécessa
 > Dans ce cas là, une fenêtre apparaitra 3 fois , sélectionner<b> Apache 2</b> lors de la première , <b>Oui</b> sur la seconde et rentrer un <b>mot de passe </b>sur la troisième.
 
     sudo apt-get update
-    sudo apt-get install  git sqlite3 libsqlite3-dev mysql-server libmysqlclient-dev postgresql postgresql-client postgresql-contrib libpq-dev redis-server memcached imagemagick ffmpeg mupdf mupdf-tools libxml2-dev apache2 php libapache2-mod-php mysql-server php-mysql  ruby-bundler ruby-dev ruby-railties ( )
+    sudo apt-get install  git sqlite3 libsqlite3-dev mysql-server libmysqlclient-dev postgresql postgresql-client postgresql-contrib libpq-dev redis-server memcached imagemagick ffmpeg mupdf mupdf-tools libxml2-dev apache2 php libapache2-mod-php mysql-server php-mysql  ruby-bundler ruby-dev ruby-railties
     /*sudo apt-get phpmyadmin*/
     sudo bundle install
     sudo gem install rails 
