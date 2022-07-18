@@ -1,0 +1,27 @@
+
+<%@questions.each do |q|%>
+
+<div class="condensed-question m-2 col-2 " id="condQues<%=q.id%>">
+    <div class="ward-question">
+        <h5 class="none-event"><%= q.question%></h5>
+    </div>
+    <div class="panel-condensed row">
+        
+        <%for i in 1..4%>
+            <div class="col-<%=if q.theme=="sprite" then 3 else 6 end%> answer">
+                <%if q.theme=="sprite"%>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%=q.send("answer#{i}")%>.png"
+        alt="img-answer' class="icon-card"/>
+                <%else%>
+        <span class="span-answer"><%=q.send("answer#{i}")%></span>
+                <%end%>
+            </div>  
+             
+        <%end%>
+
+    </div>
+    </div>
+
+<%end%>
+
+

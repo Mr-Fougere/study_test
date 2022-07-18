@@ -29,15 +29,14 @@
     <div class="top-bar">
       <div class="navigation">
         <a class="nav-link nav-logo"  href="/"><%= image_tag "qulbutoke.png",class:"logo-site"%></a>
-        <%if @quiz %>
+        <%if @quiz != nil %>
           <a class="ward-quiz nav-link nav-page">
             <span>Quizz n°<%= @quiz.id%></span>
           </a> 
         <% end%>
-        <a class="nav-link nav-page " href="<%=mainTools_path%>"><span>Quizz Tools</span> <span class="material-symbols-outlined ">quiz</span></a>
-        <a class="nav-link nav-page metronome" href="<%=metronome_path%>">Métronome<span class="material-symbols-outlined pan_tool_alt ">pan_tool_alt</span></a>
-        <div class="nav-page account ">
-          <a class="nav-link account " href="<%= if user_signed_in? then user_path else new_user_session_path end%>">
+        <a class="nav-link nav-page <%= if @current_page=="Availables Tools for you" then  "page-selected" end %>" href="<%=mainTools_path%>"><span>Quizz Tools</span> <span class="material-symbols-outlined ">quiz</span></a>
+        <div class="nav-page account <%= if @current_page=="My Account" then  "page-selected" end %>">
+          <a class="nav-link account " " href="<%= if user_signed_in? then user_path else new_user_session_path end%>">
             <%if user_signed_in?%> 
             <span class="material-symbols-outlined">face_6</span>
               <span>My Account</span>
@@ -55,14 +54,14 @@
             <%end%>
           </a>
         </div>
-        <a class="nav-link nav-page" href="<%=help_path%>"><span class="material-symbols-outlined ">help</span></a>
+        <a class="nav-link nav-page" href="https://github.com/Mr-Fougere/study_test"><span class="material-symbols-outlined ">help</span></a>
       </div>
     </div>  
   <%end%>
-  <%if @current_methode=="index"%>
+  <%if @current_page and !request.original_url.include?("sign_in") and !request.original_url.include?("sign_up") and !request.original_url.include?("password/new")%>
 
   <div class="panel-bienvenue">
-        <h3>Welcome to Qulbutoquiz</h3>
+        <h3><%= @current_page%></h3>
     </div>
   <%end %>
     <%= yield %>

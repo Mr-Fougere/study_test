@@ -10,19 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_16_115429) do
-  create_table "questions", charset: "utf8mb4", force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 2022_07_18_075753) do
+  create_table "questions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "question"
     t.text "answer1"
     t.text "answer2"
     t.text "answer3"
     t.text "answer4"
     t.integer "goodAnswer"
-    t.string "themes"
+    t.string "theme"
     t.string "category"
   end
 
-  create_table "quizzes", charset: "utf8mb4", force: :cascade do |t|
+  create_table "quizzes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "difficulty"
     t.bigint "question1_id"
     t.bigint "question2_id"
@@ -37,7 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_16_115429) do
     t.index ["question5_id"], name: "fk_rails_09eddb98ec"
   end
 
-  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "username", default: "", null: false

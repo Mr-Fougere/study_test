@@ -10,15 +10,18 @@ class QuizzesController < ApplicationController
     end
     puts current_user.inspect
     end
-      @current_methode="index"
-    end
+      @current_page="Bienvenue sur Qulbutoquiz"
+   end 
 
   def edit
     @quiz=Quiz.find(params[:id])
     @questions=Question.all
-    
+          @current_page="Modification of a quiz"
   end
-
+  def tools 
+      @quizz=Quiz.all
+      @current_page="List of all quizzes availables"
+  end 
   def show
     @user=User.new
     @quiz=Quiz.find(params[:id])
@@ -115,7 +118,7 @@ class QuizzesController < ApplicationController
 
     @questions=Question.all
     @quiz = Quiz.new
-
+      @current_page="Creation of a new Quiz"
   end
 
   def resetSession
@@ -129,27 +132,45 @@ class QuizzesController < ApplicationController
     @quiz = Quiz.find(params[:id])
 
     @quiz.destroy
-
+    
     session[:delete] = "Quiz n°"+@quiz.id.to_s+" supprimé avec succés"
     redirect_to quizzes_path
 
   end
 
   def create
+    arr_ques=params[:questionsChosen].split(',')
+    freshQuiz=ActionController::Parameters.new
+
+    for i in 1..5
+            freshQuiz[:"question#{i}_id"]=arr_ques[i-1]
+    end
+    
+    puts Random.new.rand(1..4)
+    freshQuiz[:difficulty] = Random.new.rand(1..4)
+    puts freshQuiz.inspect
+    params[:quiz]= freshQuiz
+    puts params.inspect
+puts params.inspect.inspect
     quiz_params=params.require(:quiz).permit(:question1_id,:question2_id,:question3_id,:question4_id,:question5_id,:difficulty)
-    quiz = Quiz.create(quiz_params)
+    Quiz.create(quiz_params)
     session[:create] = "Quiz créé avec succés"
     redirect_to quizzes_path
   end
 
   def update
-    @quiz=Quiz.find(params[:id])
-    quiz_params=params.require(:quiz).permit(:question1_id,:question2_id,:question3_id,:question4_id,:question5_id,:difficulty)
-    @quiz.update(quiz_params)
-    session[:update] = "Quiz n°"+@quiz.id.to_s+" mis à jour avec succés"
-    puts quiz_params
-    puts quiz_params.inspect
-    puts quiz_params.inspect
+
+    arr_ques=params[:questionsUpdated].split(',')
+    quiz=ActionController::Parameters.new
+    for i in 1..5
+            quiz[:"question#{i}_id"]=arr_ques[i-1]
+    end
+    quiz[:id]=params[:id]
+    quiz[:difficulty] = params[:diff]
+    params[:quiz]=quiz
+puts params.inspect.inspect
+    quiz_params=params.require(:quiz).permit(:id,:question1_id,:question2_id,:question3_id,:question4_id,:question5_id,:difficulty)
+    Quiz.update(quiz_params)
 
     redirect_to quizzes_path
   end

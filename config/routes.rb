@@ -7,8 +7,8 @@ Rails.application.routes.draw do
    get "/tools/create" => redirect("/quizzes/new")
    get '/metronome',to:'pages#metronome',as:'metronome'
    get '/tools',to:'pages#tools',as:'mainTools'
+   get '/questions/tools',to:'quizzes#tools',as:'tools_quiz'
    get '/questions/choices',to:'questions#choices',as: 'choice_question'
-   get '/tools/modify',to:'pages#modify',as:'modify_quiz'
    get '/tools/delete',to:'pages#delete',as:'delete_quiz'
    get '/tools/modify',to:'pages#modify',as:'modify_question'
    get '/tools/delete',to:'pages#delete',as:'delete_question'

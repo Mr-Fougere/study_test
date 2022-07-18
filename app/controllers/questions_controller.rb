@@ -1,11 +1,10 @@
 class QuestionsController < ApplicationController
   def index
-
+        @current_page="List of questions availables"
     @questions= Question.all
   end
 
   def show
-
   end
 
   def create

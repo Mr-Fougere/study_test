@@ -1,0 +1,26 @@
+<div class="index-quizzes row g-0 ">
+<% @quizz.each do |quiz| %>
+
+    <div class="quiz-card nav-link m-2 col-2 position-relative">
+         <div class="band-card">
+      <div class="slot-left">
+        <div class="slot-icon">
+        <img 
+          class="icon-card waiting-quiz"
+          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/<%=case quiz.difficulty when 1 then"poke"when 2 then"great"when 3 then"ultra"when 4 then"master"end%>-ball.png"
+          alt="icon-card"/>
+              </div>
+        </div>
+
+        <h3 class="slot-right"><span>Quizz n°<%= quiz.id%></span></h3>
+      </div>
+      <div class="body-card d-flex g-0">
+  <a href="<%=quiz_path(quiz.id)%>" data-turbo-method=delete data-turbo-confirm="Sure to delete quiz n°<%=quiz.id%> ?" class="btn btn-danger quiz-category col-6" > Delete </a>
+  <a href="<%=edit_quiz_path(quiz.id)%>" data-turbo-method=get class="btn btn-warning quiz-category col-6" >Modify</a>
+
+</div>
+
+    </div>
+
+<%end%>
+</div>

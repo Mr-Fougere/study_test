@@ -1,22 +1,74 @@
-<%arr_question=[] 
-@questions.each do |q|
-arr_question.append(q.question)
+<%arr_question=[] ;
+for i in 1..5
+     arr_question.push(@quiz.send("question#{i}_id"))
 end
 %>
 
-<div>
-<span>Modification du quizz <%=@quiz.id%></span>
+<%= form_for(@quiz, url: quiz_path(id:@quiz), method: :patch) do |f| %>
+     <div class="user-actions">
+    <label  style="display:none" >
+            <input type="text" name="questionsUpdated" id="postValue" value="00000">
+    </label>
 
-<%= form_for  @quiz do |f|%>
-    <%=f.select :question1_id, arr_question%>
-    <%=f.select :question2_id, arr_question%>
-    <%=f.select :question3_id, arr_question%>
-    <%=f.select :question4_id, arr_question%>
-    <%=f.select :question5_id, arr_question%>
-    <%=f.select :difficulty, [1,2,3,4]%>
 
-    <button type="submit" class="btn btn-primary">Modify le quiz <%=@quiz.id%></button>
-
-<%end%>
-
+    <label  style="display:none" >
+            <input type="text" name="diff" id="diff" value="<%=@quiz.difficulty%>">
+    </label>
+    <button type="submit" class="btn btn-primary " disabled id="confirmQuiz">Modify quizz</button>
 </div>
+<%end%>
+<div class="index-quizzes row g-0">
+<%= render "quizzes/base" %>
+</div>
+
+<script>
+    var chosen=<%=arr_question%>
+    
+    console.log(chosen) 
+    
+    var postValue=document.getElementById("questionUpdated")
+var btnConfirm=document.getElementById("confirmQuiz")
+
+    var choices=Array.from(document.getElementsByClassName("condensed-question"))
+
+    var postValue=document.getElementById("postValue")
+    choices.forEach(b => {
+        b.addEventListener('click',(e)=>updateChoices(e.target.id))
+        if (chosen.includes(parseInt(b.id.replace(/[^0-9]+/, '')))){
+                document.getElementById(b.id).className="condensed-question m-2 col-2 quizSelect"
+                                } })
+                   btnConfirm.disabled=true
+ function arrayRemove(arr, value) { 
+    
+        return arr.filter(function(ele){ 
+            return ele != value; 
+        });
+    }
+
+    function updateChoices(id){
+            let convertedId=id.replace(/[^0-9]+/, '')
+            if(!chosen.includes(convertedId)){
+                chosen.push(convertedId)
+                document.getElementById(id).className="condensed-question m-2 col-2 quizSelect"
+                if(chosen.length>5){
+console.log('ici')
+                        document.getElementById("condQues"+chosen[0]).className="condensed-question m-2 col-2"  
+                        chosen.shift() 
+                }
+               
+            }else{
+                chosen = arrayRemove(chosen,convertedId)
+                document.getElementById(id).className="condensed-question m-2 col-2"   
+            }
+                if(chosen.length==5){
+                   btnConfirm.disabled=false
+                    postValue.setAttribute('value',chosen)
+                }  else{
+                   btnConfirm.disabled=true
+               }
+
+
+     }
+
+</script>
+
