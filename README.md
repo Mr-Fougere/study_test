@@ -1,7 +1,6 @@
 # Bienvenue sur le projet Qulbutoquiz
 
-Bonjour à tous ! Je m'appelle Alexandre et je suis heureux de vous présenter le projet Qulbutoquiz que j'ai developpé en une semaine.
-
+mee
 ## Qu'est ce que Qulbutoquiz ?
 Ce projet est un site web où l'utilisateur peut répondre à des quiz sur le thème extrêmement vaste que sont les jeux pokémon pour tester sa culture à ce sujet.
 ## Pourquoi avoir développer ce site Web ?
@@ -193,7 +192,7 @@ Vous pouvez maintenant accéder au site via l'adresse
  
 # Utilisation
  
-La base de données est déja pourvu en question et quiz pour jouer directmeent.
+La base de données est déja pourvu en question et quiz pour jouer directment.
 Elle est également pourvu d'un compte **admin** qui a les permissions pour modifier,supprimer et créer des quizz.
 > ****Nom d'utilisateur : admin
 > Mot de passe : qulbutoquiz****

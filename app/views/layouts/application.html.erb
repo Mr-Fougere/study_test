@@ -35,7 +35,7 @@
           </a> 
         <% end%>
         <a class="nav-link nav-page <%= if @current_page=="Availables Tools for you" then  "page-selected" end %>" href="<%=mainTools_path%>"><span>Quizz Tools</span> <span class="material-symbols-outlined ">quiz</span></a>
-        <div class="nav-page account <%= if @current_page=="My Account" then  "page-selected" end %>">
+        <div class="nav-page account    <%= if @current_page=="My Account" then  "page-selected" end %>">
           <a class="nav-link account " " href="<%= if user_signed_in? then user_path else new_user_session_path end%>">
             <%if user_signed_in?%> 
             <span class="material-symbols-outlined">face_6</span>
