@@ -49,7 +49,7 @@ class QuizzesController < ApplicationController
       @numQuestion=@questionUser
     end
 
-    if @question['themes']=="sprite"
+    if @question['theme']=="sprite"
       @sprite=true
     else
       @sprite=false

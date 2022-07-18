@@ -21,10 +21,10 @@ class QuestionsController < ApplicationController
       end
     end
     question[:question]=params[:quest]
-    question[:themes]=params[:theme].to_s
+    question[:theme]=params[:theme].to_s
     question[:category]=params[:category].to_s
     params[:questions]=question
-    q_params=params.require(:questions).permit(:answer1,:answer2,:answer3,:answer4,:goodAnswer,:question,:category,:type,:themes)
+    q_params=params.require(:questions).permit(:answer1,:answer2,:answer3,:answer4,:goodAnswer,:question,:category,:type,:theme)
     question = Question.create(q_params)
 
     redirect_to root_path

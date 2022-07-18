@@ -1,6 +1,6 @@
 class CreateQuizTable < ActiveRecord::Migration[7.0]
   def change
-    create_table :quiz do |t|
+    create_table :quizzes do |t|
 
       t.bigint :difficulty
       t.bigint :question1_id
